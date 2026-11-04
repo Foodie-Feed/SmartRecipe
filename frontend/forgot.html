@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SmartRecipe — Reset Password</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-emoji">🍛</span>
+      <span class="logo-text">Smart<span>Recipe</span></span>
+    </a>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo-wrap">
+      <span class="auth-logo-emoji">🔐</span>
+      <h1>Reset <span>Password</span></h1>
+    </div>
+    <div id="stepRequest">
+      <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:20px;text-align:center">
+        Enter your email and we will send you a reset link.
+      </p>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="resetEmail" placeholder="you@example.com"/>
+      </div>
+      <div class="auth-error" id="resetError"></div>
+      <button class="btn-auth" onclick="sendReset()">Send Reset Link →</button>
+      <p style="margin-top:16px;text-align:center;font-size:.85rem;color:var(--text-muted)">
+        <a href="auth.html">← Back to Login</a>
+      </p>
+    </div>
+    <div id="stepDone" style="display:none;text-align:center">
+      <span style="font-size:3rem;display:block;margin-bottom:12px">✉️</span>
+      <h2 style="font-family:Playfair Display,serif;font-size:1.3rem;color:var(--text);margin-bottom:8px">Check your inbox!</h2>
+      <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:20px">
+        We sent a password reset link to your email. Click the link to set a new password.
+      </p>
+      <a href="auth.html" class="btn-auth" style="display:block;text-align:center">Back to Login</a>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+  const html = document.documentElement;
+  html.setAttribute("data-theme", localStorage.getItem("sr-theme") || "light");
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+    html.setAttribute("data-theme", next); localStorage.setItem("sr-theme", next);
+  });
+  function toast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg; el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2600);
+  }
+  function sendReset() {
+    const email = document.getElementById("resetEmail").value.trim();
+    const err   = document.getElementById("resetError");
+    if (!email) { err.textContent = "Please enter your email."; return; }
+    if (!email.includes("@")) { err.textContent = "Enter a valid email."; return; }
+    err.textContent = "";
+    toast("Sending reset link...");
+    setTimeout(() => {
+      document.getElementById("stepRequest").style.display = "none";
+      document.getElementById("stepDone").style.display = "block";
+    }, 1000);
+  }
+</script>
+</body>
+</html>

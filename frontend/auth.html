@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SmartRecipe — Sign In / Sign Up</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-emoji">🍛</span>
+      <span class="logo-text">Smart<span>Recipe</span></span>
+    </a>
+    <nav></nav>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- AUTH PAGE -->
+<div class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo-wrap">
+      <span class="auth-logo-emoji">🍛</span>
+      <h1>Smart<span>Recipe</span></h1>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Log In</button>
+      <button class="auth-tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="auth-panel active" id="panelLogin">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <div class="auth-forgot"><a href="forgot.html">Forgot password?</a></div>
+      <div class="auth-error" id="loginError"></div>
+      <button class="btn-auth" onclick="handleLogin()">Log In →</button>
+      <div class="auth-divider"><span>or</span></div>
+      <p style="text-align:center;font-size:.85rem;color:var(--text-muted)">
+        No account? <a href="#" onclick="switchTab('signup')">Sign up free</a>
+      </p>
+    </div>
+
+    <!-- SIGNUP PANEL -->
+    <div class="auth-panel" id="panelSignup">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Onkar Ghadage" autocomplete="name"/>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="signupPass" placeholder="Create a password" autocomplete="new-password"/>
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" id="signupConfirm" placeholder="Repeat password" autocomplete="new-password"/>
+      </div>
+      <div class="auth-error" id="signupError"></div>
+      <button class="btn-auth" onclick="handleSignup()">Create Account →</button>
+      <div class="auth-divider"><span>or</span></div>
+      <p style="text-align:center;font-size:.85rem;color:var(--text-muted)">
+        Already have an account? <a href="#" onclick="switchTab('login')">Log in</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // theme
+  const html = document.documentElement;
+  html.setAttribute("data-theme", localStorage.getItem("sr-theme") || "light");
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("sr-theme", next);
+  });
+
+  // tab on hash
+  if (location.hash === "#signup") switchTab("signup");
+
+  function switchTab(tab) {
+    ["login","signup"].forEach(t => {
+      document.getElementById("panel"+t.charAt(0).toUpperCase()+t.slice(1)).classList.remove("active");
+      document.getElementById("tab"+t.charAt(0).toUpperCase()+t.slice(1)).classList.remove("active");
+    });
+    document.getElementById("panel"+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add("active");
+    document.getElementById("tab"+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add("active");
+  }
+
+  function toast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg; el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2800);
+  }
+
+  function handleLogin() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass  = document.getElementById("loginPass").value;
+    const err   = document.getElementById("loginError");
+    if (!email || !pass) { err.textContent = "Please fill in all fields."; return; }
+    if (!email.includes("@")) { err.textContent = "Enter a valid email."; return; }
+    err.textContent = "";
+    // Simulate login — in real app this calls the API
+    toast("Welcome back! Redirecting...");
+    setTimeout(() => location.href = "dashboard.html", 1000);
+  }
+
+  function handleSignup() {
+    const name    = document.getElementById("signupName").value.trim();
+    const email   = document.getElementById("signupEmail").value.trim();
+    const pass    = document.getElementById("signupPass").value;
+    const confirm = document.getElementById("signupConfirm").value;
+    const err     = document.getElementById("signupError");
+    if (!name || !email || !pass || !confirm) { err.textContent = "Please fill in all fields."; return; }
+    if (!email.includes("@")) { err.textContent = "Enter a valid email."; return; }
+    if (pass.length < 6) { err.textContent = "Password must be at least 6 characters."; return; }
+    if (pass !== confirm) { err.textContent = "Passwords do not match."; return; }
+    err.textContent = "";
+    toast("Account created! Redirecting...");
+    setTimeout(() => location.href = "dashboard.html", 1000);
+  }
+</script>
+</body>
+</html>

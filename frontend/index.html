@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SmartRecipe — Discover Regional Indian Dishes</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-emoji">🍛</span>
+      <span class="logo-text">Smart<span>Recipe</span></span>
+    </a>
+    <nav>
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#dishes" class="nav-link">Dishes</a>
+    </nav>
+    <div class="header-right">
+      <button class="btn-nav-outline" onclick="location.href='auth.html'">Log In</button>
+      <button class="btn-nav-login" onclick="location.href='auth.html#signup'">Get Started</button>
+      <button class="theme-toggle" id="themeToggle">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🇮🇳 100% Authentic Regional Recipes</div>
+    <h1 class="hero-title">Discover the Soul of<br><span class="ac">Regional Indian</span> Cuisine</h1>
+    <p class="hero-sub">Upload a photo of any dish, and our AI identifies it instantly — then serves you authentic recipes, ingredients, and nutrition info.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="location.href='auth.html'">🚀 Start Exploring — It's Free</button>
+      <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">xxx+</span><span class="stat-label">Regional Dishes</span></div>
+      <div class="stat-item"><span class="stat-num">2</span><span class="stat-label">AI Models</span></div>
+      <div class="stat-item"><span class="stat-num">xxx+</span><span class="stat-label">Recipe Variants</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <span class="section-tag">How It Works</span>
+    <h2 class="section-title">From photo to recipe in seconds</h2>
+    <p class="section-sub">Three simple steps. No cooking knowledge required.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <span class="step-icon">📸</span>
+        <h3>Upload a Photo</h3>
+        <p>Snap or upload any picture of a regional Indian dish from your gallery or camera.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <span class="step-icon">🤖</span>
+        <h3>AI Identifies It</h3>
+        <p>Our CNN, ResNet50, and Gemini Vision API analyse the image and vote for the best match.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <span class="step-icon">📋</span>
+        <h3>Get Full Recipe</h3>
+        <p>Receive authentic recipe variants, ingredients, prep time, cook time, and nutrition info.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <span class="step-icon">💾</span>
+        <h3>Save &amp; Cook</h3>
+        <p>Save your favourite recipes to your personal collection and cook whenever you like.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section alt" id="features">
+  <div class="section-inner">
+    <span class="section-tag">Features</span>
+    <h2 class="section-title">Everything you need to explore Indian food</h2>
+    <p class="section-sub">Simple, focused features built around one goal — getting you the right recipe fast.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <h3>AI-Powered Dish Recognition</h3>
+        <p>Three AI models work together — our custom CNN, ResNet50, and Gemini Vision. Majority vote gives you the most accurate prediction.</p>
+        <span class="feature-badge">CNN + ResNet50 + Gemini</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📖</span>
+        <h3>Multiple Recipe Variants</h3>
+        <p>Every dish has its own story. Get the authentic version, a spicy twist, a healthy alternative — all in one place.</p>
+        <span class="feature-badge">Authentic · Spicy · Healthy</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎲</span>
+        <h3>Let God Decide</h3>
+        <p>Can't pick a dish? Hit the button and let the universe choose a random regional dish for you to explore today.</p>
+        <span class="feature-badge">Random Surprise</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💚</span>
+        <h3>Nutrition &amp; Health Score</h3>
+        <p>Every recipe comes with detailed nutrition values — calories, protein, carbs, fat — plus a health score out of 100.</p>
+        <span class="feature-badge">Health Score 0–100</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">❤️</span>
+        <h3>Save Your Favourites</h3>
+        <p>Build your personal recipe book. Save any recipe with one tap and come back to it anytime.</p>
+        <span class="feature-badge">Personal Collection</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📋</span>
+        <h3>Copy with One Click</h3>
+        <p>Copy the full recipe or just the ingredients list instantly. Share it with family or paste it anywhere.</p>
+        <span class="feature-badge">One-Click Copy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISH PREVIEW -->
+<section class="section" id="dishes">
+  <div class="section-inner">
+    <span class="section-tag">Our Collection</span>
+    <h2 class="section-title">Peek at what's inside</h2>
+    <p class="section-sub">A tiny sample of the 150+ regional dishes in our dataset. Create an account to unlock all of them.</p>
+    <div class="dishes-grid">
+      <div class="dish-card" onclick="location.href='auth.html'"  >
+        <div class="dish-img" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2)">🍛</div>
+        <div class="dish-body"><div class="dish-name">Butter Chicken</div><div class="dish-region">🏛 North India · Punjab</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+      <div class="dish-card" onclick="location.href='auth.html'" >
+        <div class="dish-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9)">🥘</div>
+        <div class="dish-body"><div class="dish-name">Palak Paneer</div><div class="dish-region">🏛 North India · UP</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+      <div class="dish-card" onclick="location.href='auth.html'" >
+        <div class="dish-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)">🍲</div>
+        <div class="dish-body"><div class="dish-name">Misal Pav</div><div class="dish-region">🌊 Maharashtra</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+      <div class="dish-card" onclick="location.href='auth.html'" >
+        <div class="dish-img" style="background:linear-gradient(135deg,#fff8e1,#ffecb3)">🥗</div>
+        <div class="dish-body"><div class="dish-name">Pongal</div><div class="dish-region">🌴 Tamil Nadu</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+      <div class="dish-card" onclick="location.href='auth.html'" >
+        <div class="dish-img" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb)">🍜</div>
+        <div class="dish-body"><div class="dish-name">Rogan Josh</div><div class="dish-region">❄️ Jammu & Kashmir</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+      <div class="dish-card" onclick="location.href='auth.html'" >
+        <div class="dish-img" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7)">🍱</div>
+        <div class="dish-body"><div class="dish-name">Dhokla</div><div class="dish-region">🌞 Gujarat</div>
+          <div class="dish-lock">🔒 Sign in to view recipe</div></div>
+        <div class="dish-overlay"><span>View Recipe</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOK SECTION -->
+<section class="hook-section">
+  <div class="hook-inner">
+    <span class="hook-emoji">🤔</span>
+    <h2 class="hook-title">You've seen a dish somewhere.<br>But what is it, and how do you make it?</h2>
+    <p class="hook-sub">With SmartRecipe, a single photo is all you need. Our AI does the hard part — you just cook and enjoy.</p>
+    <button class="btn-primary" onclick="location.href='auth.html'">Create Free Account</button>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to explore 150+ regional dishes?</h2>
+  <p>Join SmartRecipe today. Free forever for students and home cooks.</p>
+  <a href="auth.html" class="btn-white">Get Started — It's Free</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-emoji">🍛</span>
+      <span class="logo-text">Smart<span>Recipe</span></span>
+    </a>
+    <p class="footer-copy">© 2026 SmartRecipe · Final Year Project · Made with ❤️</p>
+    <div class="footer-links">
+      <a href="auth.html">Sign Up</a>
+      <a href="auth.html">Log In</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const t = document.getElementById("themeToggle");
+  const html = document.documentElement;
+  const saved = localStorage.getItem("sr-theme") || "light";
+  html.setAttribute("data-theme", saved);
+  t.addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("sr-theme", next);
+  });
+</script>
+</body>
+</html>

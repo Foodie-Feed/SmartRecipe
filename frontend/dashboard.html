@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SmartRecipe — Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-emoji">🍛</span>
+      <span class="logo-text">Smart<span>Recipe</span></span>
+    </a>
+    <nav>
+      <a href="#" class="nav-link" onclick="showPanel('upload')">Identify Dish</a>
+      <a href="#" class="nav-link" onclick="showPanel('god')">God Decide</a>
+      <a href="#" class="nav-link" onclick="showPanel('saved')">Saved</a>
+    </nav>
+    <div class="header-right">
+      <span style="font-size:.88rem;color:var(--text-muted);font-weight:500">👋 Welcome, Onkar</span>
+      <button class="btn-nav-outline" onclick="location.href='index.html'">Log Out</button>
+      <button class="theme-toggle" id="themeToggle">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- DASHBOARD LAYOUT -->
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar">
+    <span class="sidebar-label">Main</span>
+    <button class="s-link active" id="sl-home" onclick="showPanel('home')">
+      <span class="si">🏠</span> Home
+    </button>
+    <button class="s-link" id="sl-upload" onclick="showPanel('upload')">
+      <span class="si">📸</span> Identify Dish
+    </button>
+    <button class="s-link" id="sl-god" onclick="showPanel('god')">
+      <span class="si">🎲</span> Let God Decide
+    </button>
+    <span class="sidebar-label">My Recipes</span>
+    <button class="s-link" id="sl-saved" onclick="showPanel('saved')">
+      <span class="si">❤️</span> Saved Recipes
+    </button>
+    <span class="sidebar-label">Account</span>
+    <button class="s-link" onclick="location.href='index.html'">
+      <span class="si">🚪</span> Log Out
+    </button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+
+    <!-- HOME PANEL -->
+    <div class="dash-panel active" id="panel-home">
+      <div class="dash-welcome">
+        <h2>Hello, Onkar! 👋</h2>
+        <p>What do you want to discover today? Upload a dish photo or let us surprise you.</p>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-card" onclick="showPanel('upload')">
+          <span class="quick-icon">📸</span>
+          <h3>Identify Dish</h3>
+          <p>Upload a food photo</p>
+        </div>
+        <div class="quick-card" onclick="showPanel('god')">
+          <span class="quick-icon">🎲</span>
+          <h3>Let God Decide</h3>
+          <p>Get a random dish</p>
+        </div>
+        <div class="quick-card" onclick="showPanel('saved')">
+          <span class="quick-icon">❤️</span>
+          <h3>Saved Recipes</h3>
+          <p>Your collection</p>
+        </div>
+      </div>
+      <h2 class="page-title">Recently Saved</h2>
+      <div class="saved-grid">
+        <div class="saved-card">
+          <div class="saved-img" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2)">🍛</div>
+          <div class="saved-body">
+            <div class="saved-name">Butter Chicken</div>
+            <div class="saved-sub">Authentic · Punjab · Saved 2 days ago</div>
+            <div class="saved-actions">
+              <button class="btn-sm" onclick="showPanel('upload')">View Recipe</button>
+              <button class="btn-sm danger">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="saved-card">
+          <div class="saved-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9)">🥘</div>
+          <div class="saved-body">
+            <div class="saved-name">Palak Paneer</div>
+            <div class="saved-sub">Healthy · North India · Saved 5 days ago</div>
+            <div class="saved-actions">
+              <button class="btn-sm" onclick="showPanel('upload')">View Recipe</button>
+              <button class="btn-sm danger">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD / IDENTIFY PANEL -->
+    <div class="dash-panel" id="panel-upload">
+      <h1 class="page-title">📸 Identify a Dish</h1>
+
+      <!-- UPLOAD ZONE -->
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="handleDrop(event)">
+        <span class="upload-icon">🖼️</span>
+        <h3>Drop your food photo here</h3>
+        <p>or click to browse from your gallery</p>
+        <button class="btn-primary" style="pointer-events:none">Choose Photo</button>
+        <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this.files[0])"/>
+        <div class="upload-preview" id="uploadPreview">
+          <img id="previewImg" src="" alt="Preview"/>
+        </div>
+      </div>
+
+      <!-- ANALYZE BUTTON -->
+      <div style="margin-top:16px;text-align:right" id="analyzeWrap" style="display:none">
+        <button class="btn-primary" id="analyzeBtn" onclick="runAnalysis()" style="display:none">
+          🔍 Identify Dish
+        </button>
+      </div>
+
+      <!-- PROCESSING CARD -->
+      <div class="processing-card" id="processingCard">
+        <h4>🤖 AI Models Analysing...</h4>
+        <div class="model-row">
+          <span class="model-name">Custom CNN</span>
+          <div class="bar-wrap"><div class="bar-fill" id="bar-cnn"></div></div>
+          <span class="model-conf" id="conf-cnn">—</span>
+        </div>
+        <div class="model-row">
+          <span class="model-name">ResNet50</span>
+          <div class="bar-wrap"><div class="bar-fill" id="bar-rn"></div></div>
+          <span class="model-conf" id="conf-rn">—</span>
+        </div>
+        <div class="model-row">
+          <span class="model-name">Gemini Vision</span>
+          <div class="bar-wrap"><div class="bar-fill" id="bar-gm"></div></div>
+          <span class="model-conf" id="conf-gm">—</span>
+        </div>
+        <p style="margin-top:14px;font-size:.82rem;color:var(--text-light)">Majority vote determines final prediction...</p>
+      </div>
+
+      <!-- RECIPE RESULT -->
+      <div class="recipe-result" id="recipeResult">
+
+        <!-- DISH HEADER -->
+        <div class="recipe-head">
+          <div>
+            <div class="recipe-dish" id="dishName">Butter Chicken</div>
+            <div class="recipe-region" id="dishRegion">🏛 Punjab · North India</div>
+            <div class="chips">
+              <span class="chip">⏱ Prep: <b>20 min</b></span>
+              <span class="chip">🔥 Cook: <b>35 min</b></span>
+              <span class="chip">👥 Serves: <b>4</b></span>
+              <span class="chip green">💚 Health: <b>72/100</b></span>
+            </div>
+          </div>
+          <div class="health-circle">
+            <span class="hn">72</span>
+            <span class="hl">Health</span>
+          </div>
+        </div>
+
+        <!-- VARIANTS -->
+        <div class="variant-row">
+          <div class="variant-lbl">Choose a variant:</div>
+          <div class="variant-chips">
+            <button class="v-chip active" onclick="selectVariant(this,'authentic')">🏆 Authentic</button>
+            <button class="v-chip" onclick="selectVariant(this,'spicy')">🌶️ Extra Spicy</button>
+            <button class="v-chip" onclick="selectVariant(this,'healthy')">🥗 Healthy</button>
+          </div>
+        </div>
+
+        <!-- RECIPE COLS -->
+        <div class="recipe-cols">
+          <!-- INGREDIENTS -->
+          <div class="recipe-box">
+            <div class="rbox-head">
+              <span class="rbox-title">🧄 Ingredients</span>
+              <button class="btn-copy" onclick="copyText('ingredients')">📋 Copy</button>
+            </div>
+            <ul class="ingr-list" id="ingredients">
+              <li>500g boneless chicken, cut into pieces</li>
+              <li>1 cup tomato puree</li>
+              <li>½ cup fresh cream</li>
+              <li>2 tbsp butter</li>
+              <li>1 tsp garam masala</li>
+              <li>1 tsp kashmiri red chili powder</li>
+              <li>1 tsp ginger-garlic paste</li>
+              <li>Salt to taste</li>
+              <li>Kasuri methi (dried fenugreek) — a pinch</li>
+            </ul>
+          </div>
+          <!-- STEPS -->
+          <div class="recipe-box">
+            <div class="rbox-head">
+              <span class="rbox-title">📋 Method</span>
+              <button class="btn-copy" onclick="copyText('steps')">📋 Copy</button>
+            </div>
+            <ol class="steps-list" id="steps">
+              <li>Marinate chicken with ginger-garlic paste, chili powder, and salt for 30 minutes.</li>
+              <li>Grill or pan-fry the chicken until lightly charred.</li>
+              <li>In a pan, melt butter. Add tomato puree and cook for 10 minutes.</li>
+              <li>Add garam masala, kashmiri chili powder and stir well.</li>
+              <li>Add grilled chicken into the sauce and simmer for 10 minutes.</li>
+              <li>Pour in fresh cream, add kasuri methi and cook for 5 more minutes.</li>
+              <li>Serve hot with naan or rice.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- NUTRITION -->
+        <div class="recipe-box" style="margin-top:18px">
+          <div class="rbox-head"><span class="rbox-title">💚 Nutrition (per serving)</span></div>
+          <div class="nutri-grid">
+            <div class="nutri-item"><span class="nutri-val">420</span><span class="nutri-lbl">Calories</span></div>
+            <div class="nutri-item"><span class="nutri-val">32g</span><span class="nutri-lbl">Protein</span></div>
+            <div class="nutri-item"><span class="nutri-val">18g</span><span class="nutri-lbl">Fat</span></div>
+            <div class="nutri-item"><span class="nutri-val">22g</span><span class="nutri-lbl">Carbs</span></div>
+            <div class="nutri-item"><span class="nutri-val">4g</span><span class="nutri-lbl">Fiber</span></div>
+            <div class="nutri-item"><span class="nutri-val">380mg</span><span class="nutri-lbl">Sodium</span></div>
+          </div>
+        </div>
+
+        <!-- SAVE BAR -->
+        <div class="save-bar">
+          <button class="btn-save" id="saveBtn" onclick="saveRecipe()">❤️ Save Recipe</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GOD DECIDE PANEL -->
+    <div class="dash-panel" id="panel-god">
+      <h1 class="page-title">🎲 Let God Decide</h1>
+      <p style="color:var(--text-muted);margin-bottom:32px">Confused about what to cook? Hit the button and the universe picks a dish for you!</p>
+      <div class="god-section">
+        <button class="god-btn" id="godBtn" onclick="letGodDecide()">
+          <span id="godIcon">🙏</span>
+          <span id="godBtnText">Let God Decide</span>
+        </button>
+        <div class="god-result" id="godResult">
+          <h3 id="godDish"></h3>
+          <p id="godRegion"></p>
+          <p id="godDesc" style="margin-top:8px"></p>
+          <button class="god-result-btn" onclick="loadGodRecipe()">📖 Show Recipe →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVED PANEL -->
+    <div class="dash-panel" id="panel-saved">
+      <h1 class="page-title">❤️ Saved Recipes</h1>
+      <div class="saved-grid" id="savedGrid">
+        <div class="saved-card">
+          <div class="saved-img" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2)">🍛</div>
+          <div class="saved-body">
+            <div class="saved-name">Butter Chicken</div>
+            <div class="saved-sub">Authentic · Punjab · Health 72/100</div>
+            <div class="saved-actions">
+              <button class="btn-sm" onclick="showPanel('upload')">View Recipe</button>
+              <button class="btn-sm danger" onclick="removeSaved(this)">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="saved-card">
+          <div class="saved-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9)">🥘</div>
+          <div class="saved-body">
+            <div class="saved-name">Palak Paneer</div>
+            <div class="saved-sub">Healthy · North India · Health 85/100</div>
+            <div class="saved-actions">
+              <button class="btn-sm" onclick="showPanel('upload')">View Recipe</button>
+              <button class="btn-sm danger" onclick="removeSaved(this)">Remove</button>
+            </div>
+          </div>
+        </div>
+        <div class="saved-card">
+          <div class="saved-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)">🍲</div>
+          <div class="saved-body">
+            <div class="saved-name">Misal Pav</div>
+            <div class="saved-sub">Spicy · Maharashtra · Health 68/100</div>
+            <div class="saved-actions">
+              <button class="btn-sm" onclick="showPanel('upload')">View Recipe</button>
+              <button class="btn-sm danger" onclick="removeSaved(this)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── THEME ──────────────────────────────────────────
+const html = document.documentElement;
+html.setAttribute("data-theme", localStorage.getItem("sr-theme") || "light");
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+  html.setAttribute("data-theme", next);
+  localStorage.setItem("sr-theme", next);
+});
+
+// ── TOAST ──────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 2600);
+}
+
+// ── PANEL NAVIGATION ───────────────────────────────
+function showPanel(name) {
+  document.querySelectorAll(".dash-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".s-link").forEach(l => l.classList.remove("active"));
+  document.getElementById("panel-"+name).classList.add("active");
+  const sl = document.getElementById("sl-"+name);
+  if (sl) sl.classList.add("active");
+}
+
+// ── FILE UPLOAD ────────────────────────────────────
+function handleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById("previewImg").src = e.target.result;
+    document.getElementById("uploadPreview").style.display = "block";
+    document.getElementById("analyzeBtn").style.display = "inline-flex";
+    document.getElementById("analyzeWrap").style.display = "block";
+  };
+  reader.readAsDataURL(file);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById("uploadZone").classList.remove("dragover");
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith("image/")) handleFile(file);
+}
+
+// ── RUN ANALYSIS (simulated) ───────────────────────
+function runAnalysis() {
+  document.getElementById("analyzeBtn").style.display = "none";
+  document.getElementById("processingCard").style.display = "block";
+  document.getElementById("recipeResult").style.display = "none";
+
+  const models = [
+    { bar: "bar-cnn", conf: "conf-cnn", val: 91, label: "91%" },
+    { bar: "bar-rn",  conf: "conf-rn",  val: 87, label: "87%" },
+    { bar: "bar-gm",  conf: "conf-gm",  val: 94, label: "94%" },
+  ];
+
+  let i = 0;
+  function animateNext() {
+    if (i >= models.length) {
+      setTimeout(showRecipe, 600);
+      return;
+    }
+    const m = models[i++];
+    document.getElementById(m.bar).style.width = m.val + "%";
+    setTimeout(() => {
+      document.getElementById(m.conf).textContent = m.label;
+      setTimeout(animateNext, 400);
+    }, 900);
+  }
+  animateNext();
+}
+
+function showRecipe() {
+  document.getElementById("processingCard").style.display = "none";
+  document.getElementById("recipeResult").style.display = "block";
+  document.getElementById("recipeResult").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ── VARIANT SELECTION ──────────────────────────────
+const variants = {
+  authentic: {
+    ingredients: [
+      "500g boneless chicken", "1 cup tomato puree", "½ cup fresh cream",
+      "2 tbsp butter", "1 tsp garam masala", "1 tsp kashmiri chili powder",
+      "Ginger-garlic paste", "Salt to taste", "Kasuri methi (pinch)"
+    ],
+    steps: [
+      "Marinate chicken with spices for 30 minutes.",
+      "Grill or pan-fry until lightly charred.",
+      "Melt butter and add tomato puree; cook 10 minutes.",
+      "Add garam masala and chili powder.",
+      "Add grilled chicken and simmer 10 minutes.",
+      "Pour cream, add kasuri methi; cook 5 minutes.",
+      "Serve hot with naan or rice."
+    ]
+  },
+  spicy: {
+    ingredients: [
+      "500g boneless chicken", "1.5 cups tomato puree", "4 green chilies (slit)",
+      "2 tsp red chili powder", "1 tsp black pepper", "2 tbsp butter",
+      "1 tsp garam masala", "Ginger-garlic paste", "Salt to taste"
+    ],
+    steps: [
+      "Marinate chicken with chili, pepper and spices — 1 hour.",
+      "Grill chicken in a hot pan until charred.",
+      "Cook tomato puree with green chilies and chili powder.",
+      "Add grilled chicken and cook on high heat 5 minutes.",
+      "Add remaining spices and simmer 10 minutes.",
+      "Finish with butter and serve with extra green chutney."
+    ]
+  },
+  healthy: {
+    ingredients: [
+      "400g boneless chicken (no skin)", "1 cup blended tomatoes", "¼ cup low-fat yogurt",
+      "1 tbsp olive oil", "½ tsp garam masala", "1 tsp turmeric",
+      "Ginger-garlic paste", "Salt to taste", "Fresh coriander"
+    ],
+    steps: [
+      "Marinate chicken with yogurt, turmeric and spices 1 hour.",
+      "Air-fry or bake chicken at 200°C for 20 minutes.",
+      "Heat olive oil; add tomato puree and cook 8 minutes.",
+      "Add minimal spices to keep it light.",
+      "Add baked chicken and simmer 8 minutes.",
+      "Garnish with coriander. Serve with brown rice."
+    ]
+  }
+};
+
+function selectVariant(el, name) {
+  document.querySelectorAll(".v-chip").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  const v = variants[name];
+  const ingr = document.getElementById("ingredients");
+  ingr.innerHTML = v.ingredients.map(i => "<li>"+i+"</li>").join("");
+  const steps = document.getElementById("steps");
+  steps.innerHTML = v.steps.map(s => "<li>"+s+"</li>").join("");
+}
+
+// ── COPY ───────────────────────────────────────────
+function copyText(which) {
+  const el = document.getElementById(which);
+  const text = Array.from(el.querySelectorAll("li")).map(li => li.textContent.trim()).join("
+");
+  navigator.clipboard.writeText(text).then(() => toast("Copied to clipboard! 📋"));
+}
+
+// ── SAVE RECIPE ────────────────────────────────────
+function saveRecipe() {
+  const btn = document.getElementById("saveBtn");
+  btn.textContent = "✅ Saved!";
+  btn.classList.add("saved");
+  toast("Recipe saved to your collection! ❤️");
+}
+
+// ── GOD DECIDE ────────────────────────────────────
+const godDishes = [
+  { name:"Misal Pav",       region:"🌊 Maharashtra",         desc:"Spicy sprouted lentil curry served with pav bread. A Maharashtrian street food classic."},
+  { name:"Pongal",          region:"🌴 Tamil Nadu",           desc:"A comforting rice and lentil dish seasoned with pepper, cumin, and ghee. Perfect for breakfast."},
+  { name:"Rogan Josh",      region:"❄️ Jammu & Kashmir",     desc:"Slow-cooked aromatic lamb curry with a rich red gravy. A Kashmiri delicacy."},
+  { name:"Dhokla",          region:"🌞 Gujarat",              desc:"Steamed fermented chickpea flour cake. Light, fluffy, and full of flavour."},
+  { name:"Chole Bhature",   region:"🏛 Punjab · North India", desc:"Spiced chickpea curry paired with fluffy deep-fried bread. A north Indian crowd favourite."},
+  { name:"Hyderabadi Biryani",region:"👑 Telangana",          desc:"Slow-cooked layered rice with marinated meat, saffron, and caramelised onions. Royal and aromatic."},
+  { name:"Masala Dosa",     region:"🌴 Karnataka",            desc:"Crispy fermented rice crepe filled with spiced potato masala. A South Indian icon."},
+  { name:"Litti Chokha",    region:"🌾 Bihar",                desc:"Roasted wheat dumplings stuffed with sattu, served with smoky roasted brinjal and tomato."},
+  { name:"Bisi Bele Bath",  region:"🌴 Karnataka",            desc:"A one-pot dish of rice, lentils, and vegetables cooked with special spice powder and ghee."},
+  { name:"Saraswat Fish Curry",region:"🌊 Goa & Konkan",      desc:"Tangy coconut milk fish curry from the Konkan coast. Simple, fresh, and delicious."}
+];
+
+function letGodDecide() {
+  const btn = document.getElementById("godBtn");
+  const icon = document.getElementById("godIcon");
+  const txt  = document.getElementById("godBtnText");
+  const result = document.getElementById("godResult");
+  icon.textContent = "⏳";
+  txt.textContent  = "Asking the universe...";
+  btn.disabled = true;
+  result.style.display = "none";
+  setTimeout(() => {
+    const dish = godDishes[Math.floor(Math.random() * godDishes.length)];
+    icon.textContent = "🙏";
+    txt.textContent  = "Let God Decide";
+    btn.disabled = false;
+    document.getElementById("godDish").textContent   = dish.name;
+    document.getElementById("godRegion").textContent = dish.region;
+    document.getElementById("godDesc").textContent   = dish.desc;
+    result.style.display = "block";
+    toast("The universe chose: " + dish.name + "! 🙏");
+  }, 1800);
+}
+
+function loadGodRecipe() {
+  showPanel("upload");
+  toast("Load your dish image to see the full recipe!");
+}
+
+// ── REMOVE SAVED ───────────────────────────────────
+function removeSaved(btn) {
+  const card = btn.closest(".saved-card");
+  card.style.opacity = "0"; card.style.transform = "scale(.95)";
+  card.style.transition = "all .3s";
+  setTimeout(() => card.remove(), 300);
+  toast("Recipe removed.");
+}
+</script>
+</body>
+</html>

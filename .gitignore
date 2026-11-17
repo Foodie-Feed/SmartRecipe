@@ -234,6 +234,7 @@ pip-wheel-metadata/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+backend/weights/
 
 # Frontend
 node_modules/
@@ -243,3 +244,6 @@ out/
 
 # ml work
 ml_work/
+
+# documents
+documents/
